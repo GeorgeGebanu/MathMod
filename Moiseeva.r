@@ -60,21 +60,20 @@ formula1 = as.formula(paste("h2o_flux ~ Tau + rand_err_Tau + H + rand_err_H + LE
                             rand_err_LE + co2_flux + h2o_flux + qc_h2o_flux + rand_err_h2o_flux + 
                             co2_molar_density + co2_mole_fraction + co2_mixing_ratio + 
                             h2o_time_lag + sonic_temperature + air_temperature + air_density + 
-                            air_molar_volume + es + RH + VPD + u_rot + wind_speed + max_speed + 
-                            u. + TKE + un_Tau + un_H + un_LE + un_co2_flux + un_h2o_flux + 
-                            u_var + v_var + w_var + h2o_var + w.ts_cov + w.co2_cov + 
-                            w.h2o_cov + co2 + co2.1 + flowrate")) 
+                            air_molar_volume + es + RH + VPD + u_rot + u.
+                            + TKE + un_Tau + un_H + un_LE + un_co2_flux + un_h2o_flux + co2.1")) 
 formula1 
 mod2=lm(formula1, data = tbl) 
-anova(mod2) 
+anova(mod2)
 summary(mod2) 
-formula2 = as.formula(paste("h2o_flux ~ LE + qc_LE + RH + 
-                            VPD + max_speed + u. + un_LE + un_h2o_flux + h2o_var")) 
+formula2 = as.formula(paste("h2o_flux ~ Tau + LE + rand_err_H + co2_flux + rand_err_h2o_flux + 
+                            co2_molar_density  + sonic_temperature + air_temperature + es + 
+                            RH + VPD + u. "))
 mod3=lm(formula2, data = tbl) 
 anova(mod3) 
 summary(mod3) 
-formula3 = as.formula(paste("h2o_flux ~ LE + RH + 
-                            VPD + un_LE + un_h2o_flux + h2o_var")) 
+formula3 = as.formula(paste("h2o_flux ~ Tau  +  LE + rand_err_h2o_flux + co2_molar_density 
+                             + sonic_temperature + RH + u.")) 
 mod4=lm(formula3, data = tbl) 
 anova(mod4) 
 summary(mod4)
