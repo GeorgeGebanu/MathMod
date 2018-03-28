@@ -83,10 +83,12 @@ mod5 = lm(h2o_flux ~ (Tau  +  LE + rand_err_h2o_flux + co2_molar_density
 mod5
 anova(mod5)
 summary(mod5)
-mod6 = lm (h2o_flux ~ (Tau  +  LE + sonic_temperature + RH + u.) - rand_err_h2o_flux - co2_molar_density, data= tbl)                 
+mod6 = lm (h2o_flux ~ (Tau  +  LE + sonic_temperature + RH + u.)^2 - rand_err_h2o_flux - co2_molar_density, data= tbl)                 
 mod6      
 anova(mod6)
 summary(mod6)
-mod7 = lm (h2o_flux ~(LE + sonic_temperature + RH + u.) - Tau, data= tbl)  
+mod7 = lm (h2o_flux ~(LE + sonic_temperature + RH + u.)^2 - Tau -u. - LE:u. - sonic_temperature:u.- RH:u., data= tbl)  
 anova(mod7)
 summary(mod7)
+
+
