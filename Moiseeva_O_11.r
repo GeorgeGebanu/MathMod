@@ -45,10 +45,10 @@ tbl_non_numeric = tbl[,!sapply(tbl,is.numeric) ]
 cor_td = cor(tbl_numeric)
 cor_td
 #корреляционный анализ не вышел, надо избавиться от строкгде есть NA
-cor_td = cor(drop_na(tbl_numeric)) 
-cor_td
-cor_td = cor(drop_na(tbl_numeric)) %>% as.data.frame %>% select(h2o_flux) 
-cor_td 
+cor_tbl = cor(drop_na(tbl_numeric)) 
+cor_tbl
+cor_tbl = cor(drop_na(tbl_numeric)) %>% as.data.frame %>% select(h2o_flux) 
+cor_tbl 
 vars = row.names(cor_tbl)[cor_tbl$h2o_flux^2 > .1] %>% na.exclude
 formula = as.formula(paste("h2o_flux~", paste(vars,collapse = "+"), sep="")) 
 #создаем формулу
@@ -77,3 +77,16 @@ formula3 = as.formula(paste("h2o_flux ~ Tau  +  LE + rand_err_h2o_flux + co2_mol
 mod4=lm(formula3, data = tbl)
 anova(mod4)
 summary(mod4)
+#взаимодействия переменных
+mod5 = lm(h2o_flux ~ (Tau  +  LE + rand_err_h2o_flux + co2_molar_density 
+                      + sonic_temperature + RH + u.) ^2, data = tbl)
+mod5
+anova(mod5)
+summary(mod5)
+mod6 = lm (h2o_flux ~ (Tau  +  LE + sonic_temperature + RH + u.) - rand_err_h2o_flux - co2_molar_density, data= tbl)                 
+mod6      
+anova(mod6)
+summary(mod6)
+mod7 = lm (h2o_flux ~(LE + sonic_temperature + RH + u.) - Tau, data= tbl)  
+anova(mod7)
+summary(mod7)
